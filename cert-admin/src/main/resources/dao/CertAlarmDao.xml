@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aszz.cert.admin.dao.CertAlarmDao">
+    <select id="getAlarmList" resultType="com.aszz.cert.admin.dto.CertAlarmDto">
+        SELECT
+        ca.cert_id certId,
+        ca.cert_alarm_info certAlarmInfo,
+        ca.cert_alarm_type certAlarmType,
+        f.device_id devId,
+        p.project_name projectName,
+        "admin" createUser,
+        ca.create_time createTime,
+        ca.update_time updateTime
+        FROM
+        certificate c,
+        cert_alarm ca,
+        cert_project p,
+        file_upload f
+        WHERE
+        c.project_id = p.id
+        and c.id = ca.cert_id
+        <if test="projectName!=null and projectName!=''">
+            and p.project_name = #{projectName}
+        </if>
+        <if test="devId!=null and devId!=''">
+            and f.device_id = #{devId}
+        </if>
+        <if test="userId!=null and userId!=''">
+            and c.create_user_id = #{userId}
+        </if>
+        GROUP BY
+        ca.id
+    </select>
+
+    <!--<select id="getAlarmListByDevId" resultType="com.aszz.cert.admin.dto.CertAlarmDto">-->
+           <!--SELECT-->
+        <!--ca.cert_id certId,-->
+        <!--ca.cert_alarm_info certAlarmInfo,-->
+        <!--ca.cert_alarm_type certAlarmType,-->
+        <!--f.device_id devId,-->
+        <!--p.project_name projectName,-->
+        <!--"admin" createUser,-->
+        <!--ca.create_time createTime,-->
+        <!--ca.update_time updateTime-->
+        <!--FROM-->
+        <!--certificate  c,-->
+        <!--cert_alarm ca,-->
+        <!--cert_project p,-->
+        <!--file_upload f-->
+        <!--WHERE-->
+        <!--c.project_id = p.id-->
+        <!--and c.id = ca.cert_id-->
+        <!--and f.device_id = #{devId}-->
+        <!--GROUP BY-->
+        <!--ca.id-->
+    <!--</select>-->
+    <!--<select id="getAlarmListByUserId" resultType="com.aszz.cert.admin.dto.CertAlarmDto">-->
+           <!--SELECT-->
+        <!--ca.cert_id certId,-->
+        <!--ca.cert_alarm_info certAlarmInfo,-->
+        <!--ca.cert_alarm_type certAlarmType,-->
+        <!--f.device_id devId,-->
+        <!--p.project_name projectName,-->
+        <!--"admin" createUser,-->
+        <!--ca.create_time createTime,-->
+        <!--ca.update_time updateTime-->
+        <!--FROM-->
+        <!--certificate  c,-->
+        <!--cert_alarm ca,-->
+        <!--cert_project p,-->
+        <!--file_upload f-->
+        <!--WHERE-->
+        <!--c.project_id = p.id-->
+        <!--and c.id = ca.cert_id-->
+        <!--and c.create_user_id = #{userId}-->
+        <!--GROUP BY-->
+        <!--ca.id-->
+    <!--</select>-->
+</mapper>

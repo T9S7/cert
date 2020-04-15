@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aszz.cert.admin.dao.UserRoleRelationDao">
+    <!--批量新增回写主键支持-->
+    <insert id="insertList">
+        INSERT INTO cert_user_role (user_id, role_id) VALUES
+        <foreach collection="list" separator="," item="item" index="index">
+            (#{item.userId,jdbcType=BIGINT},
+            #{item.roleId,jdbcType=BIGINT})
+        </foreach>
+    </insert>
+    <select id="getRoleList" resultMap="com.aszz.cert.mapper.CertRoleMapper.BaseResultMap">
+        select r.*
+        from cert_user_role ar left join cert_role r on ar.role_id = r.id
+        where ar.user_id = #{adminId}
+    </select>
+<!--    <select id="getRolePermissionList" resultMap="com.macro.mall.mapper.UmsPermissionMapper.BaseResultMap">-->
+<!--        select p.*-->
+<!--        from ums_admin_role_relation ar left join ums_role r on ar.role_id = r.id-->
+<!--            left join ums_role_permission_relation rp on r.id = rp.role_id-->
+<!--            left join ums_permission p on rp.permission_id=p.id-->
+<!--            where ar.admin_id = #{adminId} and p.id is not null-->
+<!--    </select>-->
+<!--    <select id="getPermissionList" resultMap="com.macro.mall.mapper.UmsPermissionMapper.BaseResultMap">-->
+<!--        SELECT-->
+<!--            p.*-->
+<!--        FROM-->
+<!--            ums_admin_role_relation ar-->
+<!--            LEFT JOIN ums_role r ON ar.role_id = r.id-->
+<!--            LEFT JOIN ums_role_permission_relation rp ON r.id = rp.role_id-->
+<!--            LEFT JOIN ums_permission p ON rp.permission_id = p.id-->
+<!--        WHERE-->
+<!--            ar.admin_id = #{adminId}-->
+<!--            AND p.id IS NOT NULL-->
+<!--            AND p.id NOT IN (-->
+<!--                SELECT-->
+<!--                    p.id-->
+<!--                FROM-->
+<!--                    ums_admin_permission_relation pr-->
+<!--                    LEFT JOIN ums_permission p ON pr.permission_id = p.id-->
+<!--                WHERE-->
+<!--                    pr.type = - 1-->
+<!--                    AND pr.admin_id = #{adminId}-->
+<!--            )-->
+<!--        UNION-->
+<!--        SELECT-->
+<!--            p.*-->
+<!--        FROM-->
+<!--            ums_admin_permission_relation pr-->
+<!--            LEFT JOIN ums_permission p ON pr.permission_id = p.id-->
+<!--        WHERE-->
+<!--            pr.type = 1-->
+<!--            AND pr.admin_id = #{adminId}-->
+<!--    </select>-->
+    <select id="getResourceList" resultType="com.aszz.cert.model.CertResource">
+        SELECT
+            ur.id id,
+            ur.parent_id parentId,
+            ur.resource_name resourceName,
+            ur.resource_display_name resourceDisplayName,
+            ur.resource_path resourcePath,
+            ur.resource_type resourceType,
+            ur.resource_status resourceStatus,
+            ur.resource_desc resourceDesc,
+            ur.create_user_id createUserId,
+            ur.update_user_id updateUserId,
+            ur.create_time createTime,
+            ur.update_time updateTime
+        FROM
+            cert_user_role ar
+        LEFT JOIN cert_role r ON ar.role_id = r.id
+        LEFT JOIN cert_privilege rrr ON r.id = rrr.privilege_master_value
+        LEFT JOIN cert_resource ur ON ur.id = rrr.privilege_resource_id
+        WHERE
+            ar.user_id = #{adminId}
+        AND ur.resource_status =0
+        AND ur.id IS NOT NULL
+        GROUP BY
+            ur.id
+    </select>
+
+    <select id="getMenuResourceList" resultType="com.aszz.cert.model.CertResource">
+        SELECT
+            ur.id id,
+            ur.parent_id parentId,
+            ur.resource_name resourceName,
+            ur.resource_display_name resourceDisplayName,
+            ur.resource_path resourcePath,
+            ur.resource_type resourceType,
+            ur.resource_status resourceStatus,
+            ur.resource_desc resourceDesc,
+            ur.create_user_id createUserId,
+            ur.update_user_id updateUserId,
+            ur.create_time createTime,
+            ur.update_time updateTime
+        FROM
+            cert_user_role ar
+        LEFT JOIN cert_role r ON ar.role_id = r.id
+        LEFT JOIN cert_privilege rrr ON r.id = rrr.privilege_master_value
+        LEFT JOIN cert_resource ur ON ur.id = rrr.privilege_resource_id
+        WHERE
+            ar.user_id = #{adminId}
+        AND ur.resource_type = 0
+        AND ur.resource_status =0
+        AND ur.id IS NOT NULL
+        GROUP BY
+            ur.id
+    </select>
+
+    <select id="getBtnResourceList" resultType="com.aszz.cert.model.CertResource">
+        SELECT
+            ur.id id,
+            ur.parent_id parentId,
+            ur.resource_name resourceName,
+            ur.resource_display_name resourceDisplayName,
+            ur.resource_path resourcePath,
+            ur.resource_type resourceType,
+            ur.resource_status resourceStatus,
+            ur.resource_desc resourceDesc,
+            ur.create_user_id createUserId,
+            ur.update_user_id updateUserId,
+            ur.create_time createTime,
+            ur.update_time updateTime
+        FROM
+            cert_user_role ar
+        LEFT JOIN cert_role r ON ar.role_id = r.id
+        LEFT JOIN cert_privilege rrr ON r.id = rrr.privilege_master_value
+        LEFT JOIN cert_resource ur ON ur.id = rrr.privilege_resource_id
+        WHERE
+            ar.user_id = #{adminId}
+        AND (ur.resource_type = 1 OR  ur.resource_type = 2)
+        AND ur.resource_status =0
+        AND ur.id IS NOT NULL
+        GROUP BY
+            ur.id
+    </select>
+</mapper>

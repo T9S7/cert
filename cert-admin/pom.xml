@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.aszz.cert</groupId>
+        <artifactId>cert</artifactId>
+        <version>0.0.1</version>
+    </parent>
+    <groupId>com.aszz.cert</groupId>
+    <artifactId>cert-admin</artifactId>
+    <version>0.0.1</version>
+    <name>cert-admin</name>
+    <description>cert-admin project for Spring Boot</description>
+    <packaging>jar</packaging>
+
+    <properties>
+        <java.version>1.8</java.version>
+<!--        <docker.url>47.114.72.214:5000</docker.url>-->
+        <docker.url>http://47.114.72.214:2375</docker.url>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.junit.vintage</groupId>
+                    <artifactId>junit-vintage-engine</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>com.aszz.cert</groupId>
+            <artifactId>cert-mbg</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.aszz.cert</groupId>
+            <artifactId>cert-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.aliyun.oss</groupId>
+            <artifactId>aliyun-sdk-oss</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>net.logstash.logback</groupId>
+            <artifactId>logstash-logback-encoder</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.minio</groupId>
+            <artifactId>minio</artifactId>
+        </dependency>
+        <!--        &lt;!&ndash; https://mvnrepository.com/artifact/org.springframework/springloaded &ndash;&gt;-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.springframework</groupId>-->
+        <!--            <artifactId>springloaded</artifactId>-->
+        <!--        </dependency>-->
+
+        <!--        &lt;!&ndash; https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-devtools &ndash;&gt;-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.springframework.boot</groupId>-->
+        <!--            <artifactId>spring-boot-devtools</artifactId>-->
+        <!--        </dependency>-->
+        <dependency>
+            <groupId>ch.ethz.ganymed</groupId>
+            <artifactId>ganymed-ssh2</artifactId>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/commons-net/commons-net -->
+        <dependency>
+            <groupId>commons-net</groupId>
+            <artifactId>commons-net</artifactId>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/log4j/log4j -->
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/com.jcraft/jsch -->
+        <dependency>
+            <groupId>com.jcraft</groupId>
+            <artifactId>jsch</artifactId>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-redis -->
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.boot</groupId>-->
+            <!--<artifactId>spring-boot-starter-data-redis</artifactId>-->
+            <!--<version>2.2.2.RELEASE</version>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.data</groupId>-->
+            <!--<artifactId>spring-data-commons</artifactId>-->
+            <!--<version>2.1.5.RELEASE</version>-->
+        <!--</dependency>-->
+        <!--&lt;!&ndash;SpringData工具包&ndash;&gt;-->
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.data</groupId>-->
+            <!--<artifactId>spring-data-commons</artifactId>-->
+            <!--<version>${spring-data-commons.version}</version>-->
+        <!--</dependency>-->
+
+        <!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/commons-fileupload/commons-fileupload -->
+        <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.github.ulisesbocchio</groupId>
+            <artifactId>jasypt-spring-boot-starter</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+<!--            </plugin>-->
+<!--                        <plugin>-->
+<!--                            <groupId>com.spotify</groupId>-->
+<!--                            <artifactId>docker-maven-plugin</artifactId>-->
+<!--                            <version>1.2.0</version>-->
+<!--                            <executions>-->
+<!--                                <execution>-->
+<!--                                    <id>build-image</id>-->
+<!--                                    <phase>package</phase>-->
+<!--                                    <goals>-->
+<!--                                        <goal>build</goal>-->
+<!--                                    </goals>-->
+<!--                                </execution>-->
+<!--                            </executions>-->
+<!--                            <configuration>-->
+<!--                                <dockerHost>${docker.url}</dockerHost>-->
+<!--                                <imageName>cert/${project.artifactId}</imageName>-->
+<!--                                <imageTags>-->
+<!--                                    <imageTag>${project.version}</imageTag>-->
+<!--                                </imageTags>-->
+<!--                                <forceTags>true</forceTags>-->
+<!--                                <dockerDirectory>${project.basedir}</dockerDirectory>-->
+<!--                                <resources>-->
+<!--                                    <resource>-->
+<!--                                        <targetPath>/</targetPath>-->
+<!--                                        <directory>${project.build.directory}</directory>-->
+<!--                                        <include>${project.build.finalName}.jar</include>-->
+<!--                                    </resource>-->
+<!--                                </resources>-->
+<!--                            </configuration>-->
+<!--                        </plugin>-->
+<!--            <plugin>-->
+<!--                <groupId>com.google.cloud.tools</groupId>-->
+<!--                <artifactId>jib-maven-plugin</artifactId>-->
+<!--                <version>1.7.0</version>-->
+<!--                &lt;!&ndash; maven package时自动构建镜像 &ndash;&gt;-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <phase>package</phase>-->
+<!--                        <goals>-->
+<!--                            <goal>dockerBuild</goal>-->
+<!--                        </goals>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--                <configuration>-->
+<!--                    <container>-->
+<!--                        &lt;!&ndash; 配置容器参数 &ndash;&gt;-->
+<!--                        <jvmFlags>-->
+<!--                            <jvmFlag>-Xms512m</jvmFlag>-->
+<!--                            <jvmFlag>-Xmx1024m</jvmFlag>-->
+<!--                            <jvmFlag>-XX:+UseParNewGC</jvmFlag>-->
+<!--                            <jvmFlag>-XX:+UseConcMarkSweepGC</jvmFlag>-->
+<!--                            <jvmFlag>-XX:+DisableExplicitGC</jvmFlag>-->
+<!--                            <jvmFlag>-Xdebug</jvmFlag>-->
+<!--                        </jvmFlags>-->
+<!--                        &lt;!&ndash; 配置容器端口 &ndash;&gt;-->
+<!--                        <ports>-->
+<!--                            <port>8082</port>-->
+<!--                        </ports>-->
+<!--                        &lt;!&ndash; 配置镜像创建时间 &ndash;&gt;-->
+<!--                        <useCurrentTimestamp>true</useCurrentTimestamp>-->
+<!--                    </container>-->
+<!--                    &lt;!&ndash; 允许使用http与registry连接 &ndash;&gt;-->
+<!--                    <allowInsecureRegistries>true</allowInsecureRegistries>-->
+<!--                    <from>-->
+<!--                        <image>hub.c.163.com/library/java:latest</image>-->
+<!--                    </from>-->
+<!--                    <to>-->
+<!--                        <image>{docker.url}/cert/${project.artifactId}</image>-->
+<!--                        <auth>-->
+<!--                            <username>registry</username>-->
+<!--                            <password>registry</password>-->
+<!--                        </auth>-->
+<!--                    </to>-->
+<!--                </configuration>-->
+<!--            </plugin>-->
+        </plugins>
+    </build>
+
+</project>

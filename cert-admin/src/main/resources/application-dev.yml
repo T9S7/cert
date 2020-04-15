@@ -1,0 +1,98 @@
+server:
+  port: 8082
+
+spring:
+  kafka:
+    bootstrap-servers: 117.71.48.180:9092
+    consumer:
+      enable-auto-commit: true
+      auto-offset-reset: latest
+      auto-commit-interval: 100
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      group-id: mqtt-log
+  datasource:
+    name: mysql_cert
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      #基本属性
+      url: ENC(yXk9o6URjILA3w3H22CXAKj5XypyXVPGR1UFMpPIFziELcgJDnC/fmOXkfxj0PMVZ88Q2IwzXpZ8tTT4LwtDC+N2trZclPRcU9JLtX0LzAVdG1xqOkzhCm/Y4/wr00v1qp4bLGoTGrDNCeO3LsEHcH98sVuOs5ih)
+      username: ENC(xqY/PUD4hvR9fcHWw7ei7A==)
+      password: ENC(fSequIixInLNeLd3G4+B4Q==)
+     # driver-class-name: com.mysql.cj.jdbc.Driver
+      #初始化连接数
+      initial-size: 10
+      #最小活跃连接数
+      min-size: 5
+      #最大活跃连接数
+      max-active: 20
+      #获取连接的等待时间
+      max-wait: 60000
+      #间隔多久进行一次检查，检查需要关闭的空闲连接
+      time-between-eviction-runs-millis: 60000
+      #一个连接在池中最小的生存时间(5分钟)
+      min-evictable-idle-time-millis: 300000
+      validation-query: SELECT 'X'
+      # 验证空闲的连接，若无法验证，则删除连接
+      test-while-idle: true
+      # 不检测池中连接的可用性（默认false）
+      # 导致的问题是，若项目作为服务端，数据库连接被关闭时，客户端调用就会出现大量的timeout
+      test-on-borrow: false
+      #在返回连接池之前是否验证对象
+      test-on-return: false
+      #打开PSCache，并指定每个连接上PSCache的大小。oracle设为true，mysql设为false。分库分表较多推荐设置为false
+      #第三发连接池在使用的时候，获取到Connection后，使用完毕，调用关闭方法，并没有将Connection关闭，只是放回到连接池中
+      #如果调用这个方法，而没有手动关闭PreparedStatement，就可能造成内存溢出，但是JDK1.7实现了AutoCloseable接口，就不需要关闭了
+      pool-prepared-statements: false
+      max-pool-prepared-statement-per-connection-size: 20
+      # connection-properties:
+      use-unfair-lock: true
+  quartz:
+    #相关属性配置
+    properties:
+      org:
+        quartz:
+          scheduler:
+            # 集群名，区分同一系统的不同实例，若使用集群功能，则每一个实例都要使用相同的名字
+            instanceName: clusteredScheduler
+            # 若是集群下，每个instanceId必须唯一
+            instanceId: AUTO
+          threadPool:
+            #一般使用这个便可
+            class: org.quartz.simpl.SimpleThreadPool
+            #线程数量，不会动态增加
+            threadCount: 10
+            threadPriority: 5
+            threadsInheritContextClassLoaderOfInitializingThread: true
+          jobStore:
+            #选择JDBC的存储方式
+            class: org.quartz.impl.jdbcjobstore.JobStoreTX
+            driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
+            tablePrefix: QRTZ_
+            useProperties: false
+            isClustered: true
+            clusterCheckinInterval: 15000
+    job-store-type: jdbc
+    #是否等待任务执行完毕后，容器才会关闭
+    wait-for-jobs-to-complete-on-shutdown: false
+    #配置的job是否覆盖已经存在的JOB信息
+    overwrite-existing-jobs: false
+
+
+user:
+  default:
+    password: 999999
+
+
+certpath:
+  csr: /root/Client/csr/       #证书请求文件上传路径
+  crt: /root/Client/crt/       #生成证书存放路径
+  zipTemp: /root/Client/zip/   #正式环境批量下载临时路径
+  pem: /root/CA/newcerts/
+# jasypt加密的密匙
+jasypt:
+  encryptor:
+    password: Y6M9fAJQdU7jNp5MW
+
+
+

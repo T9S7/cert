@@ -1,0 +1,17 @@
+spring:
+  datasource:
+    url: ENC(yXk9o6URjILA3w3H22CXAKj5XypyXVPGR1UFMpPIFziELcgJDnC/fmOXkfxj0PMVZ88Q2IwzXpZ8tTT4LwtDC+N2trZclPRcU9JLtX0LzAVdG1xqOkzhCm/Y4/wr00v1qp4bLGoTGrDNCeO3LsEHcH98sVuOs5ih)
+    username: ENC(xqY/PUD4hvR9fcHWw7ei7A==)
+    password: ENC(fSequIixInLNeLd3G4+B4Q==)
+    druid:
+      initial-size: 5 #连接池初始化大小
+      min-idle: 10 #最小空闲连接数
+      max-active: 20 #最大连接数
+      web-stat-filter:
+        exclusions: "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*" #不统计这些请求数据
+      stat-view-servlet: #访问监控网页的登录用户名和密码
+        login-username: druid
+        login-password: druid
+
+logging:
+  path: /var/logs #配置日志生成路径
